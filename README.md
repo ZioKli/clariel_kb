@@ -1,0 +1,1 @@
+A custom split 3x5+3 keyboard. Based off the KLOR and Totem keyboards with a custom thumb section. Reversible PCB's, and support for Azoteq TPS65/TPS43 touchpads. THIS PROJECT IS IN EARLY DEVELOPMENT AND THE HARDWARE HAS NOT BEEN TESTED OR MANUFACTURED. 
