@@ -1,0 +1,184 @@
+units:
+    $default_width: cx
+    $default_height: cy
+    kx: cx
+    ky: cy
+    far_pinky_stagger: '-1.30 ky'
+    pinky_stagger: '-0.65 ky'
+    ring_stagger: 0 ky
+    middle_stagger: 0.5 ky
+    index_stagger: 0 ky
+    far_index_stagger: '-0.15 ky'
+    far_pinky_splay: 10
+    pinky_splay: 10
+    ring_splay: 4
+    middle_splay: 0
+    index_splay: 0
+    far_index_splay: 0
+    far_pinky_spread: 1 kx
+    pinky_spread: 1 kx
+    ring_spread: 1.07 kx
+    middle_spread: 1.07 kx
+    index_spread: 1 kx
+    far_index_spread: 1 kx
+    thumb_x_shift: 0 kx
+    thumb_y_shift: '-1.15 ky'
+    left_thumb_splay: -15
+    mid_thumb_splay: -30
+    right_thumb_splay: -45
+    mid_thumb_shift_x: 0.175 kx
+    mid_thumb_shift_y: '-0.125 ky'
+    right_thumb_shift_x: 0.35 kx
+    right_thumb_shift_y: '-0.18 ky'
+    px: 3
+    py: 3
+    pkx: kx + px
+    pky: ky + py
+    rect_left_padding: 0.6 kx
+    rect_right_padding: 0.3 kx
+    rect_bottom_padding: 0.0 ky
+    rect_top_padding: 0.1 ky
+    l_far_pinky_splay: far_pinky_splay
+    l_pinky_splay: pinky_splay - far_pinky_splay
+    l_ring_splay: ring_splay - pinky_splay
+    l_middle_splay: middle_splay - ring_splay
+    l_index_splay: index_splay - middle_splay
+    l_far_index_splay: far_index_splay - index_splay
+    l_far_pinky_stagger: far_pinky_stagger
+    l_pinky_stagger: pinky_stagger - far_pinky_stagger
+    l_ring_stagger: ring_stagger - pinky_stagger
+    l_middle_stagger: middle_stagger - ring_stagger
+    l_index_stagger: index_stagger - middle_stagger
+    l_far_index_stagger: far_index_stagger - index_stagger
+    l_left_thumb_splay: left_thumb_splay
+    l_mid_thumb_splay: mid_thumb_splay - left_thumb_splay
+    l_right_thumb_splay: right_thumb_splay - mid_thumb_splay
+points:
+    zones:
+        main:
+            rotate: 0
+            key:
+                padding: 1 ky
+                spread: 1 kx
+            rows:
+                bottom: null
+                home: null
+                top: null
+            columns:
+                pinky:
+                    rows:
+                        top:
+                            skip: false
+                    key:
+                        stagger: l_pinky_stagger
+                        splay: l_pinky_splay
+                        spread: pinky_spread
+                ring:
+                    key:
+                        stagger: l_ring_stagger
+                        splay: l_ring_splay
+                        spread: ring_spread
+                middle:
+                    key:
+                        stagger: l_middle_stagger
+                        splay: l_middle_splay
+                        spread: middle_spread
+                index:
+                    key:
+                        stagger: l_index_stagger
+                        splay: l_index_splay
+                        spread: index_spread
+                far_index:
+                    key:
+                        stagger: l_far_index_stagger
+                        splay: l_far_index_splay
+                        spread: far_index_spread
+        thumbs:
+            key:
+                padding: 1 ky
+                spread: 1 kx
+            anchor:
+                ref: main_index_bottom
+                shift:
+                    - thumb_x_shift
+                    - thumb_y_shift + far_index_stagger
+            rows:
+                cluster: null
+            columns:
+                left:
+                    key:
+                        splay: l_left_thumb_splay
+                        skip: false
+                mid:
+                    key:
+                        splay: l_mid_thumb_splay
+                        shift:
+                            - mid_thumb_shift_x
+                            - mid_thumb_shift_y
+                right:
+                    key:
+                        splay: l_right_thumb_splay
+                        shift:
+                            - right_thumb_shift_x
+                            - right_thumb_shift_y
+outlines:
+    _shape_rect:
+        -
+            what: polygon
+            operation: stack
+            fillet: 0
+            points:
+                -
+                    ref: main_middle_top
+                    shift:
+                        - rect_right_padding + (2kx + 0.5pkx)
+                        - >-
+                            rect_top_padding + 0.5 pky + (index_stagger -
+                            middle_stagger)
+                -
+                    ref: main_middle_bottom
+                    shift:
+                        - rect_right_padding + (2kx + 0.5pkx)
+                        - >-
+                            rect_bottom_padding + (thumb_y_shift - 0.5 pky)  +
+                            (index_stagger - middle_stagger)
+                -
+                    ref: main_middle_bottom
+                    shift:
+                        - rect_left_padding + (-3kx - 0.5pkx)
+                        - >-
+                            rect_bottom_padding + (thumb_y_shift - 0.5 pky)  +
+                            (index_stagger - middle_stagger)
+                -
+                    ref: main_middle_top
+                    shift:
+                        - rect_left_padding + (-3kx - 0.5pkx)
+                        - >-
+                            rect_top_padding + 0.5 pky  + (index_stagger -
+                            middle_stagger)
+    _shape_keys:
+        -
+            what: rectangle
+            where: true
+            fillet: 0
+            size:
+                - pkx
+                - pky
+    board:
+        - +_shape_rect
+        - +_shape_keys
+    board_fillet:
+        -
+            what: outline
+            name: board
+            fillet: 1
+    debug_keys:
+        -
+            what: rectangle
+            where: true
+            size:
+                - kx-0.5
+                - ky-0.5
+    debug_combo:
+        - +board_fillet
+        - '-debug_keys'
